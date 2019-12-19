@@ -50,8 +50,8 @@ public class User implements Entity {
     }
 
     @Override
-    public void setTable(String nameTable) {
-        this.tableName = nameTable;
+    public void setTable(String tableName) {
+        this.tableName = tableName;
 
     }
 }

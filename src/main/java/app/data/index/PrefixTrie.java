@@ -1,10 +1,7 @@
 package app.data.index;
 
-import org.springframework.stereotype.Component;
-
 import java.util.*;
 
-@Component
 public class PrefixTrie {
     private NodeOfTrie root = new NodeOfTrie();
 
@@ -84,8 +81,21 @@ public class PrefixTrie {
         }
     }
 
-    public void delete(String word, UUID uuid) {
-        delete(root, word, 0, uuid);
+    public boolean delete(String word, UUID uuid) {
+        NodeOfTrie temp = searchNode(word);
+
+        if (temp != null && temp.isLeaf()) {
+            if (temp.getIdListForLeaf().contains(uuid)) {
+                if (temp.sizeIdList() == 1) {
+                    temp.setLeaf(false); //????
+                    delete(root, word, 0, uuid);
+                } else {
+                    temp.deleteId(uuid);
+                }
+                return true;
+            }
+        }
+        return false;
     }
 
     private boolean delete(NodeOfTrie current, String word, int index, UUID uuid) {
@@ -103,15 +113,15 @@ public class PrefixTrie {
         if (node == null) {
             return false;
         }
-
         boolean shouldDeleteCurrentNode = delete(node, word, index + 1, uuid) && !node.isLeaf();
-
         if (shouldDeleteCurrentNode) {
             if (current.getChildren().get(ch).sizeIdList() == 1) {
                 current.getChildren().remove(ch);
                 return current.getChildren().isEmpty();
             } else {
-                current.getChildren().get(ch).deleteId(uuid);
+                if (node.isLeaf()) {
+                    current.getChildren().get(ch).deleteId(uuid);
+                }
                 return !current.getChildren().isEmpty();
             }
         }

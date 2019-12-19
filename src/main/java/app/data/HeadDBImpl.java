@@ -25,6 +25,7 @@ public class HeadDBImpl<T extends Entity> implements HeadDB<T> {
     @Override
     public T create(String tableName, T val) {
         if (!tables.containsKey(tableName)) {
+            System.out.println("create table ept");
             tables.put(tableName, new GeneralTableImpl<T>());
         }
         val.setTable(tableName);

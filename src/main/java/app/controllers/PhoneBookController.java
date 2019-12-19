@@ -18,7 +18,6 @@ public class PhoneBookController {
     @BeforeDeployment
     public void setTableName(@PathVariable(value = "idPB") String path) {
         this.tableName = path;
-        System.out.println(tableName);
     }
 
     @Autowired

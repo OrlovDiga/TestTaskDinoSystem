@@ -33,8 +33,8 @@ public class EntryPhoneBook implements Entity {
     }
 
     @Override
-    public void setTable(String nameTable) {
-        tableName = nameTable;
+    public void setTable(String tableName) {
+        tableName = tableName;
     }
 
     public UUID getId() {

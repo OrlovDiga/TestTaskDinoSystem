@@ -9,5 +9,5 @@ public interface Entity {
     UUID generateUUID();
     String getVal();
     String getTable();
-    void setTable(String nameTable);
+    void setTable(String tableName);
 }

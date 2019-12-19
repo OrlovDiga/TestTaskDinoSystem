@@ -27,7 +27,6 @@ public class GeneralTableImpl<T extends Entity> implements GeneralTable<T> {
     public T add(T val) {
         trie.insert(val.getVal(), val.generateUUID());
         entries.put(val.getId(), val);
-        //mb get a ne put
         return entries.get(val.getId());
     }
 
@@ -35,7 +34,8 @@ public class GeneralTableImpl<T extends Entity> implements GeneralTable<T> {
     public T change(T val) {
         trie.delete(val.getVal(), val.getId());
         trie.insert(val.getVal(), val.getId());
-        return entries.put(val.getId(), val);
+        entries.put(val.getId(), val);
+        return entries.get(val.getId());
     }
 
     @Override
