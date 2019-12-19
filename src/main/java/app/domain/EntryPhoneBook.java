@@ -12,8 +12,10 @@ import java.util.UUID;
 public class EntryPhoneBook implements Entity {
 
     private UUID id;
+    private String tableName;
     private String name;
     private String value;
+    private UUID userId;
 
     public UUID generateUUID() {
         this.id = UUID.randomUUID();
@@ -25,24 +27,9 @@ public class EntryPhoneBook implements Entity {
         return value;
     }
 
-    public void setId(UUID id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getValue() {
-        return value;
-    }
-
-    public void setValue(String value) {
-        this.value = value;
+    @Override
+    public String getTable() {
+        return null;
     }
 
     public UUID getId() {
@@ -52,9 +39,5 @@ public class EntryPhoneBook implements Entity {
     public void change(String name, String value) {
         this.name = name;
         this.value = value;
-    }
-
-    public String getTable() {
-        return "phone_books";
     }
 }

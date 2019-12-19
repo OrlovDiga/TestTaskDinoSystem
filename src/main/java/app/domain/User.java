@@ -13,6 +13,7 @@ public class User implements Entity {
 
     @JsonProperty(value = "id")
     private UUID id;
+    private String tableName;
     @JsonProperty(value = "name")
     private String name;
     @JsonProperty(value = "surname")
@@ -21,8 +22,6 @@ public class User implements Entity {
     private UUID phoneBookId;
     @JsonIgnore
     private String val;
-    @JsonIgnore
-    private Boolean filled;
 
     public User(String name, String surname) {
         this.name = name;
@@ -39,10 +38,6 @@ public class User implements Entity {
     @Override
     public String getVal() {
         return name;
-    }
-
-    public boolean isFilled() {
-        return (name != null && surname != null);
     }
 
     public void change(String name, String surname) {

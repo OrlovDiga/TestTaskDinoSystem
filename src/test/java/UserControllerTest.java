@@ -40,7 +40,7 @@ public class UserControllerTest {
     public void test() {
         given(this.userGeneralDB.getById(any()))
                 .willReturn(new User("Dima", "Ivanov"));
-        List<User> userList = userGeneralDB.searchUUIDS("Di");
+        List<User> userList = userGeneralDB.searchEntries("Di");
         String name = userList.get(0).getName();
         assertEquals(name, "Dima");
 

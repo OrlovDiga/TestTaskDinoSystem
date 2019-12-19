@@ -9,9 +9,10 @@ import java.util.UUID;
 public interface GeneralDB<T extends Entity> {
 
     T get(@NotNull T val);
-    T getById(@NotNull UUID uuid, String tableName);
+    T getById(@NotNull UUID uuid);
     T add(@NotNull T val);
     T change(@NotNull T val);
     void remove(@NotNull T val);
-    List<T> getAll(String tableName);
+    List<T> getAll();
+    List<T> searchEntries(String inText);
 }

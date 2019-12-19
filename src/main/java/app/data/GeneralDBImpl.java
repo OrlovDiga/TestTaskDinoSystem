@@ -2,7 +2,9 @@ package app.data;
 
 import app.domain.Entity;
 import app.data.index.PrefixTrie;
+import org.jboss.arquillian.container.test.api.BeforeDeployment;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
@@ -10,53 +12,48 @@ import java.util.stream.Collectors;
 
 @Component
 public class GeneralDBImpl<T extends Entity> implements GeneralDB<T> {
-    private Map<String, Map<UUID, T>> entries = new HashMap<>();
+    private Map<UUID, T> entries = new HashMap<>();
 
-    @Autowired
-    private PrefixTrie trie;
+    private PrefixTrie trie = new PrefixTrie();
 
     @Override
     public T get(T val) {
-        return getById(val.getId(), val.getTable());
+        return getById(val.getId());
     }
 
     @Override
-    public T getById(UUID uuid, String tableName) {
-        return  getTable(tableName).get(uuid);
-    }
-
-
-    public Map<UUID, T> getTable(String nameTable) {
-        return entries.get(nameTable);
+    public T getById(UUID id) {
+        return entries.get(id);
     }
 
     @Override
     public T add(T val) {
         trie.insert(val.getVal(), val.generateUUID());
+        entries.put(val.getId(), val);
         //mb get a ne put
-        return getTable(val.getTable()).put(val.getId(), val);
+        return entries.get(val.getId());
     }
 
     @Override
     public T change(T val) {
         trie.delete(val.getVal(), val.getId());
         trie.insert(val.getVal(), val.getId());
-        return getTable(val.getTable()).put(val.getId(), val);
+        return entries.put(val.getId(), val);
     }
 
     @Override
     public void remove(T val) {
         trie.delete(val.getVal(), val.getId());
-        getTable(val.getTable()).remove(val.getId());
+        entries.remove(val.getId());
     }
 
     @Override
-    public List<T> getAll(String tableName) {
-        return new ArrayList<T>(entries.get(tableName).values());
+    public List<T> getAll() {
+        return new ArrayList<T>(entries.values());
     }
 
-    public List<T> searchUUIDS(String inText, String tableName) {
-
+    @Override
+    public List<T> searchEntries(String inText) {
         return trie.searchAll(inText).stream()
                                      .map((uuid) -> entries.get(uuid))
                                      .collect(Collectors.toList());
