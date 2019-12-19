@@ -1,6 +1,6 @@
 package app.controllers;
 
-import app.data.HeadDBImpl;
+import app.data.CoreDBImpl;
 import app.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -15,7 +15,7 @@ public class UserController {
 
     String tableName = "user";
     @Autowired
-    private HeadDBImpl<User> userHeadDB;
+    private CoreDBImpl<User> userHeadDB;
 
     @GetMapping
     public ResponseEntity<List<User>> getAll() {
@@ -33,7 +33,6 @@ public class UserController {
 
     @PostMapping
     public ResponseEntity<User> createUser(@RequestBody User user) {
-        System.out.println(tableName);
         return ResponseEntity.ok(userHeadDB.create(tableName, user));
     }
 

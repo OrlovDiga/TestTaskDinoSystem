@@ -5,7 +5,7 @@ import app.domain.Entity;
 import java.util.List;
 import java.util.UUID;
 
-public interface HeadDB<T extends Entity> {
+public interface CoreDB<T extends Entity> {
 
     T get(String tableName, T val);
     T getById(String tableName, UUID uuid);

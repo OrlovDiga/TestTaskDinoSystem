@@ -1,5 +1,7 @@
 package app.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -12,9 +14,11 @@ import java.util.UUID;
 public class EntryPhoneBook implements Entity {
 
     private UUID id;
+    @JsonIgnore
     private String tableName;
     private String name;
     private String value;
+    @JsonProperty(value = "user_id")
     private UUID userId;
 
     public UUID generateUUID() {
@@ -28,17 +32,13 @@ public class EntryPhoneBook implements Entity {
     }
 
     @Override
-    public String getTable() {
+    public String getTableName() {
         return tableName;
     }
 
     @Override
-    public void setTable(String tableName) {
-        tableName = tableName;
-    }
-
-    public UUID getId() {
-        return this.id;
+    public void setTableName(String tableName) {
+        this.tableName = tableName;
     }
 
     public void change(String name, String value) {

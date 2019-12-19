@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 import java.util.*;
 
 @Component
-public class HeadDBImpl<T extends Entity> implements HeadDB<T> {
+public class CoreDBImpl<T extends Entity> implements CoreDB<T> {
 
     @Autowired
     private Map<String, GeneralTableImpl<T>> tables = new HashMap<>();
@@ -28,7 +28,7 @@ public class HeadDBImpl<T extends Entity> implements HeadDB<T> {
             System.out.println("create table ept");
             tables.put(tableName, new GeneralTableImpl<T>());
         }
-        val.setTable(tableName);
+        val.setTableName(tableName);
         return tables.get(tableName).add(val);
     }
 

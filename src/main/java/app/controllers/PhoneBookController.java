@@ -1,6 +1,6 @@
 package app.controllers;
 
-import app.data.HeadDBImpl;
+import app.data.CoreDBImpl;
 import app.domain.EntryPhoneBook;
 import org.jboss.arquillian.container.test.api.BeforeDeployment;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -21,39 +21,45 @@ public class PhoneBookController {
     }
 
     @Autowired
-    private HeadDBImpl<EntryPhoneBook> userHeadDB;
+    private CoreDBImpl<EntryPhoneBook> entryPhoneBookCoreDB;
 
     @GetMapping
     public ResponseEntity<List<EntryPhoneBook>> getAll() {
-        return ResponseEntity.ok(userHeadDB.getAll(tableName));
+        return ResponseEntity.ok(entryPhoneBookCoreDB.getAll(tableName));
     }
 
     @GetMapping(path = "/{entryId}")
-    public ResponseEntity<EntryPhoneBook> getUser(@PathVariable(value = "entryId") UUID entryId, String tableName) {
-        return ResponseEntity.ok(userHeadDB.getById(tableName, entryId));
+    public ResponseEntity<EntryPhoneBook> getEntryPhoneBook(@PathVariable(value = "entryId") UUID entryId, String tableName) {
+        EntryPhoneBook pb = entryPhoneBookCoreDB.getById(tableName, entryId);
+
+        if (pb == null) {
+            return ResponseEntity.notFound().build();
+        }
+        return ResponseEntity.ok(entryPhoneBookCoreDB.getById(tableName, entryId));
     }
 
     @PostMapping
-    public ResponseEntity<EntryPhoneBook> createUser(@RequestBody EntryPhoneBook entryPB) {
-        return ResponseEntity.ok(userHeadDB.create(tableName, entryPB));
+    public ResponseEntity<EntryPhoneBook> createEntryPhoneBook(@RequestBody EntryPhoneBook entryPB) {
+
+        return ResponseEntity.ok(entryPhoneBookCoreDB.create(tableName, entryPB));
     }
 
     @PutMapping
-    public ResponseEntity<EntryPhoneBook> changeUser(@RequestBody EntryPhoneBook entryPB) {
+    public ResponseEntity<EntryPhoneBook> changeEntryPhoneBook(@RequestBody EntryPhoneBook entryPB) {
 
-        return ResponseEntity.ok(userHeadDB.change(tableName, entryPB));
+        return ResponseEntity.ok(entryPhoneBookCoreDB.change(tableName, entryPB));
     }
 
     @DeleteMapping
-    public ResponseEntity<EntryPhoneBook> deleteUser(@RequestBody EntryPhoneBook entryPB) {
-        userHeadDB.delete(tableName, entryPB);
+    public ResponseEntity<EntryPhoneBook> deleteEntryPhoneBook(@RequestBody EntryPhoneBook entryPB) {
+        entryPhoneBookCoreDB.delete(tableName, entryPB);
 
         return ResponseEntity.noContent().build();
     }
 
     @GetMapping(path = "search")
     public ResponseEntity<List<EntryPhoneBook>> searchEntriesForPB(@RequestParam("inText") String inText) {
-        List<EntryPhoneBook> userList = userHeadDB.searchAll(tableName, inText);
+        List<EntryPhoneBook> userList = entryPhoneBookCoreDB.searchAll(tableName, inText);
         return ResponseEntity.ok(userList);
     }
 }

@@ -13,6 +13,7 @@ public class User implements Entity {
 
     @JsonProperty(value = "id")
     private UUID id;
+    @JsonIgnore
     private String tableName;
     @JsonProperty(value = "name")
     private String name;
@@ -45,12 +46,13 @@ public class User implements Entity {
         this.surname = surname;
     }
 
-    public String getTable() {
-        return "users";
+    @Override
+    public String getTableName() {
+        return tableName;
     }
 
     @Override
-    public void setTable(String tableName) {
+    public void setTableName(String tableName) {
         this.tableName = tableName;
 
     }

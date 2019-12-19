@@ -8,6 +8,6 @@ public interface Entity {
     UUID getId();
     UUID generateUUID();
     String getVal();
-    String getTable();
-    void setTable(String tableName);
+    String getTableName();
+    void setTableName(String tableName);
 }

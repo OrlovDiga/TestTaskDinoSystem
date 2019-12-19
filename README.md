@@ -35,11 +35,36 @@
 
 
 #API
-    For api/user/{id}
-        Methods:
-            GET :
 
-            POST :
+Scope - /api/user
+
+GET: /api/user -
+ /api/user Methods: (GET)
+ Request:
+
+
+
+            POST:
+                JSON:
+                    Request:
+                        {
+                                "name" : "lol",
+                                 "surname" : "kekov"
+                                 "table" : "users"
+                        }
+                    Response:
+                        {
+                                "tableName": "user",
+                                "table": "users",
+                                "id": "678136a5-e2ab-4c7e-a45f-9b28d313c3af",
+                                "name": "lol",
+                                "surname": "kekov",
+                                "phone_book_id": "c70fffb5-da28-40e3-81e5-1b1fa1324f1b"
+                        },
+
+
+            GET : Request : {}
+
             body json - {"name": "vasya", "surname": "pupkins", "age": 31}
             PUT : {
             }
