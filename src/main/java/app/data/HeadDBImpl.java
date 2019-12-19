@@ -10,7 +10,7 @@ import java.util.*;
 public class HeadDBImpl<T extends Entity> implements HeadDB<T> {
 
     @Autowired
-    private Map<String, GeneralDBImpl<T>> tables = new HashMap<>();
+    private Map<String, GeneralTableImpl<T>> tables = new HashMap<>();
 
     @Override
     public T get(String tableName, T val) {
@@ -25,8 +25,9 @@ public class HeadDBImpl<T extends Entity> implements HeadDB<T> {
     @Override
     public T create(String tableName, T val) {
         if (!tables.containsKey(tableName)) {
-            tables.put(tableName, new GeneralDBImpl<T>());
+            tables.put(tableName, new GeneralTableImpl<T>());
         }
+        val.setTable(tableName);
         return tables.get(tableName).add(val);
     }
 
@@ -48,9 +49,5 @@ public class HeadDBImpl<T extends Entity> implements HeadDB<T> {
     @Override
     public List<T> searchAll(String tableName, String inText) {
         return tables.get(tableName).searchEntries(inText);
-    }
-
-    public boolean contains(String tableName) {
-        return tables.containsKey(tableName);
     }
 }

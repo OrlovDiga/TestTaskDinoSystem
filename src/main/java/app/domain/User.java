@@ -48,4 +48,10 @@ public class User implements Entity {
     public String getTable() {
         return "users";
     }
+
+    @Override
+    public void setTable(String nameTable) {
+        this.tableName = nameTable;
+
+    }
 }

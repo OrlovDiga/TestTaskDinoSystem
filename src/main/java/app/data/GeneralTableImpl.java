@@ -2,16 +2,13 @@ package app.data;
 
 import app.domain.Entity;
 import app.data.index.PrefixTrie;
-import org.jboss.arquillian.container.test.api.BeforeDeployment;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
 import java.util.stream.Collectors;
 
 @Component
-public class GeneralDBImpl<T extends Entity> implements GeneralDB<T> {
+public class GeneralTableImpl<T extends Entity> implements GeneralTable<T> {
     private Map<UUID, T> entries = new HashMap<>();
 
     private PrefixTrie trie = new PrefixTrie();

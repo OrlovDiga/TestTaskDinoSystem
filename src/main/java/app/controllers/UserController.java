@@ -1,10 +1,8 @@
 package app.controllers;
 
-import app.data.GeneralDBImpl;
 import app.data.HeadDBImpl;
 import app.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

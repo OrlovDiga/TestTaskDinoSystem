@@ -29,7 +29,12 @@ public class EntryPhoneBook implements Entity {
 
     @Override
     public String getTable() {
-        return null;
+        return tableName;
+    }
+
+    @Override
+    public void setTable(String nameTable) {
+        tableName = nameTable;
     }
 
     public UUID getId() {

@@ -1,9 +1,7 @@
 package app.controllers;
 
-import app.data.GeneralDBImpl;
 import app.data.HeadDBImpl;
 import app.domain.EntryPhoneBook;
-import app.domain.User;
 import org.jboss.arquillian.container.test.api.BeforeDeployment;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -20,6 +18,7 @@ public class PhoneBookController {
     @BeforeDeployment
     public void setTableName(@PathVariable(value = "idPB") String path) {
         this.tableName = path;
+        System.out.println(tableName);
     }
 
     @Autowired

@@ -6,7 +6,7 @@ import javax.validation.constraints.NotNull;
 import java.util.List;
 import java.util.UUID;
 
-public interface GeneralDB<T extends Entity> {
+public interface GeneralTable<T extends Entity> {
 
     T get(@NotNull T val);
     T getById(@NotNull UUID uuid);
