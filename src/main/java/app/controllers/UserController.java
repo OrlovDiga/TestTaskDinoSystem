@@ -58,5 +58,9 @@ public class UserController {
         return ResponseEntity.ok(userList);
     }
 
+    public boolean isFilled(User user) {
+        return user != null;
+    }
+
 
 }

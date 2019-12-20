@@ -20,23 +20,22 @@ public class EntryPhoneBook implements Entity {
     private String value;
     @JsonProperty(value = "user_id")
     private UUID userId;
+    @JsonIgnore
+    private String val;
 
     public UUID generateUUID() {
         this.id = UUID.randomUUID();
         return this.id;
     }
 
-    @Override
     public String getVal() {
         return value;
     }
 
-    @Override
     public String getTableName() {
         return tableName;
     }
 
-    @Override
     public void setTableName(String tableName) {
         this.tableName = tableName;
     }

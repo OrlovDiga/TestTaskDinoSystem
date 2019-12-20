@@ -2,8 +2,8 @@ package app.controllers;
 
 import app.data.CoreDBImpl;
 import app.domain.EntryPhoneBook;
-import org.jboss.arquillian.container.test.api.BeforeDeployment;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.rest.core.annotation.HandleBeforeCreate;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,7 +15,7 @@ import java.util.UUID;
 public class PhoneBookController {
     private String tableName;
 
-    @BeforeDeployment
+    @HandleBeforeCreate
     public void setTableName(@PathVariable(value = "idPB") String path) {
         this.tableName = path;
     }

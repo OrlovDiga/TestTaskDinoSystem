@@ -29,14 +29,12 @@ public class User implements Entity {
         this.surname = surname;
     }
 
-    @Override
     public UUID generateUUID() {
             this.id = UUID.randomUUID();
             this.phoneBookId = UUID.randomUUID();
             return this.id;
     }
 
-    @Override
     public String getVal() {
         return name;
     }
@@ -46,12 +44,10 @@ public class User implements Entity {
         this.surname = surname;
     }
 
-    @Override
     public String getTableName() {
         return tableName;
     }
 
-    @Override
     public void setTableName(String tableName) {
         this.tableName = tableName;
 
