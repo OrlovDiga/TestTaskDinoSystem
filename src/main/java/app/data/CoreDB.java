@@ -11,7 +11,7 @@ public interface CoreDB<T extends Entity> {
     T getById(String tableName, UUID uuid);
     T create(String tableName, T val);
     T change(String tableName, T val);
-    void delete(String tableName, T val);
+    boolean delete(String tableName, T val);
     List<T> getAll(String tableName);
     List<T> searchAll(String tableName, String inText);
 }

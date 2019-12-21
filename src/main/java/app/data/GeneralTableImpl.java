@@ -14,29 +14,41 @@ public class GeneralTableImpl<T extends Entity> implements GeneralTable<T> {
     private PrefixTrie trie = new PrefixTrie();
 
     public T get(T val) {
-        return getById(val.getId());
+        return entries.getOrDefault(val.getId(), null);
     }
 
     public T getById(UUID id) {
-        return entries.get(id);
+        return entries.getOrDefault(id, null);
     }
 
     public T add(T val) {
         trie.insert(val.getVal(), val.generateUUID());
         entries.put(val.getId(), val);
+
         return entries.get(val.getId());
     }
 
     public T change(T val) {
-        trie.delete(val.getVal(), val.getId());
-        trie.insert(val.getVal(), val.getId());
-        entries.put(val.getId(), val);
-        return entries.get(val.getId());
+        if (entries.containsKey(val.getId())) {
+            trie.delete(val.getVal(), val.getId());
+            trie.insert(val.getVal(), val.getId());
+            entries.put(val.getId(), val);
+
+            return entries.get(val.getId());
+        }
+
+        return null;
     }
 
-    public void remove(T val) {
-        trie.delete(val.getVal(), val.getId());
-        entries.remove(val.getId());
+    public boolean remove(T val) {
+        if (entries.containsKey(val.getId())) {
+            trie.delete(val.getVal(), val.getId());
+            entries.remove(val.getId());
+
+            return true;
+        }
+
+        return false;
     }
 
     public List<T> getAll() {

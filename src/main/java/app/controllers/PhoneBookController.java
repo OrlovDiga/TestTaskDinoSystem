@@ -2,6 +2,7 @@ package app.controllers;
 
 import app.data.CoreDBImpl;
 import app.domain.EntryPhoneBook;
+import app.domain.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.rest.core.annotation.HandleBeforeCreate;
 import org.springframework.http.ResponseEntity;
@@ -25,7 +26,11 @@ public class PhoneBookController {
 
     @GetMapping
     public ResponseEntity<List<EntryPhoneBook>> getAll() {
-        return ResponseEntity.ok(entryPhoneBookCoreDB.getAll(tableName));
+        List<EntryPhoneBook> result = entryPhoneBookCoreDB.getAll(tableName);
+
+        return (result != null && !result.isEmpty()) ?
+                ResponseEntity.ok(result) :
+                ResponseEntity.notFound().build();
     }
 
     @GetMapping(path = "/{entryId}")
@@ -35,31 +40,47 @@ public class PhoneBookController {
         if (pb == null) {
             return ResponseEntity.notFound().build();
         }
+
         return ResponseEntity.ok(entryPhoneBookCoreDB.getById(tableName, entryId));
     }
 
     @PostMapping
     public ResponseEntity<EntryPhoneBook> createEntryPhoneBook(@RequestBody EntryPhoneBook entryPB) {
-
-        return ResponseEntity.ok(entryPhoneBookCoreDB.create(tableName, entryPB));
+        return isFilled(entryPB) ?
+                ResponseEntity.ok(entryPhoneBookCoreDB.create(tableName, entryPB)) :
+                ResponseEntity.notFound().build();
     }
 
     @PutMapping
     public ResponseEntity<EntryPhoneBook> changeEntryPhoneBook(@RequestBody EntryPhoneBook entryPB) {
+        EntryPhoneBook res = entryPhoneBookCoreDB.change(tableName, entryPB);
 
-        return ResponseEntity.ok(entryPhoneBookCoreDB.change(tableName, entryPB));
+        return (isFilled(entryPB) && res != null) ?
+                ResponseEntity.ok(entryPhoneBookCoreDB.change(tableName, entryPB)) :
+                ResponseEntity.notFound().build();
     }
 
     @DeleteMapping
     public ResponseEntity<EntryPhoneBook> deleteEntryPhoneBook(@RequestBody EntryPhoneBook entryPB) {
-        entryPhoneBookCoreDB.delete(tableName, entryPB);
-
-        return ResponseEntity.noContent().build();
+        return entryPhoneBookCoreDB.delete(tableName, entryPB) ?
+                ResponseEntity.noContent().build() :
+                ResponseEntity.notFound().build();
     }
 
     @GetMapping(path = "search")
     public ResponseEntity<List<EntryPhoneBook>> searchEntriesForPB(@RequestParam("inText") String inText) {
-        List<EntryPhoneBook> userList = entryPhoneBookCoreDB.searchAll(tableName, inText);
-        return ResponseEntity.ok(userList);
+        List<EntryPhoneBook> entryPhoneBookList = entryPhoneBookCoreDB.searchAll(tableName, inText);
+
+        if (entryPhoneBookList == null || entryPhoneBookList.isEmpty()) {
+            return ResponseEntity.notFound().build();
+        }
+
+        return ResponseEntity.ok(entryPhoneBookList);
+    }
+
+    private boolean isFilled(EntryPhoneBook entryPhoneBook) {
+        return entryPhoneBook != null &&
+                entryPhoneBook.getName() != null && !entryPhoneBook.getName().equals("") &&
+                entryPhoneBook.getValue() != null && !entryPhoneBook.getValue().equals("") ;
     }
 }

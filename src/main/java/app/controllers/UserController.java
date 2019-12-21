@@ -19,48 +19,61 @@ public class UserController {
 
     @GetMapping
     public ResponseEntity<List<User>> getAll() {
-        return ResponseEntity.ok(userHeadDB.getAll(tableName));
+        List<User> result = userHeadDB.getAll(tableName);
+
+        return (result != null && !result.isEmpty()) ?
+                ResponseEntity.ok(result) :
+                ResponseEntity.notFound().build();
     }
 
     @GetMapping(path = "/{userId}")
     public ResponseEntity<User> getUser(@PathVariable(value = "userId") UUID userId) {
         User user = userHeadDB.getById(tableName ,userId);
+
         if (user == null) {
             return ResponseEntity.notFound().build();
         }
+
         return ResponseEntity.ok(user);
     }
 
     @PostMapping
     public ResponseEntity<User> createUser(@RequestBody User user) {
-        return ResponseEntity.ok(userHeadDB.create(tableName, user));
+        return isFilled(user) ?
+                ResponseEntity.ok(userHeadDB.create(tableName, user)) :
+                ResponseEntity.notFound().build();
     }
 
     @PutMapping
     public ResponseEntity<User> changeUser(@RequestBody User user) {
-        return ResponseEntity.ok(userHeadDB.change(tableName, user));
+        User res = userHeadDB.change(tableName, user);
+
+        return (isFilled(user) && res != null) ?
+                ResponseEntity.ok(res) :
+                ResponseEntity.notFound().build();
     }
 
     @DeleteMapping
     public ResponseEntity<User> deleteUser(@RequestBody User user) {
-        userHeadDB.delete(tableName, user);
-
-        return ResponseEntity.noContent().build();
+        return userHeadDB.delete(tableName, user) ?
+                ResponseEntity.noContent().build() :
+                ResponseEntity.notFound().build();
     }
 
     @GetMapping(path = "search")
     public ResponseEntity<List<User>> searchUser(@RequestParam("inText") String inText) {
         List<User> userList = userHeadDB.searchAll(tableName, inText);
 
-        if (userList.isEmpty()) {
+        if (userList == null || userList.isEmpty()) {
             return ResponseEntity.notFound().build();
         }
+
         return ResponseEntity.ok(userList);
     }
 
     public boolean isFilled(User user) {
-        return user != null;
+        return user != null &&
+               user.getName() != null && !user.getName().equals("") &&
+               user.getSurname() != null && !user.getSurname().equals("");
     }
-
-
 }
