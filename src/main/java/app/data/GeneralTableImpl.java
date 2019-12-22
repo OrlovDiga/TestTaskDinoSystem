@@ -9,6 +9,7 @@ import java.util.stream.Collectors;
 
 @Component
 public class GeneralTableImpl<T extends Entity> implements GeneralTable<T> {
+
     private Map<UUID, T> entries = new HashMap<>();
 
     private PrefixTrie trie = new PrefixTrie();
