@@ -69,8 +69,8 @@
 ```javascript
 {
     "id": "19cfe3f9-8bc0-41cc-8dba-27b37efd9b74",
-	"name" : "max",
-	"surname" : "shizov",
+    "name" : "max",
+    "surname" : "shizov",
     "phone_book_id": "89c56e87-2a37-4b11-963a-117f33b8c48b"
 }
 ```
@@ -81,8 +81,8 @@
 ```javascript
 {
     "id": "19cfe3f9-8bc0-41cc-8dba-27b37efd9b74",
-	"name" : "max",
-	"surname" : "shizov",
+    "name" : "max",
+    "surname" : "shizov",
     "phone_book_id": "89c56e87-2a37-4b11-963a-117f33b8c48b"
 }
 ```
@@ -98,8 +98,8 @@
 ```javascript
 {
     "id": "19cfe3f9-8bc0-41cc-8dba-27b37efd9b74",
-	"name" : "max",
-	"surname" : "shizov",
+    "name" : "max",
+    "surname" : "shizov",
     "phone_book_id": "89c56e87-2a37-4b11-963a-117f33b8c48b"
 }
 ```
@@ -115,8 +115,8 @@
 ```javascript
 {
     "id": "19cfe3f9-8bc0-41cc-8dba-27b37efd9b74",
-	"name" : "max",
-	"surname" : "shizov",
+    "name" : "max",
+    "surname" : "shizov",
     "phone_book_id": "89c56e87-2a37-4b11-963a-117f33b8c48b"
 }
 ```
@@ -129,8 +129,8 @@
 ```javascript
 {
     "id": "19cfe3f9-8bc0-41cc-8dba-27b37efd9b74",
-	"name" : "max",
-	"surname" : "shizov",
+    "name" : "max",
+    "surname" : "shizov",
     "phone_book_id": "89c56e87-2a37-4b11-963a-117f33b8c48b"
 }
 ```
